@@ -8,6 +8,66 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import { Form, HasError, AlertError } from 'vform'; //se importa errores de vform
+import moment from 'moment'; //se importa moment para las fechas
+
+//se importa alertas
+import Swal from 'sweetalert2'
+window.Swal = Swal;
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+});
+
+window.Toast = Toast;
+
+
+window.Form = Form;
+
+Vue.component(HasError.name, HasError)
+Vue.component(AlertError.name, AlertError)
+
+
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
+
+// se importa progress bar 
+import VueProgressBar from 'vue-progressbar'
+Vue.use(VueProgressBar, {
+  color: 'rgb(143, 255, 199)',
+  failedColor: 'red',
+  height: '3px'
+})
+
+let routes = [
+    { path: '/dashboard', component: require('./components/Dashboard.vue').default },
+    { path: '/profile', component: require('./components/Profile.vue').default },
+    { path: '/users', component: require('./components/Users.vue').default },
+    { path: '/developer', component: require('./components/Developer.vue').default }
+  ]
+
+  const router = new VueRouter({
+    mode: 'history',
+    routes // short for `routes: routes`
+  })
+
+
+// filter para primer caracter en mayuscula
+  Vue.filter('upText', function(text){
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  });
+
+//filter para dar formato a la fechas  
+  Vue.filter('myDate', function(created){
+    return moment(created).format('MMMM Do YYYY');
+  });
+
+
+  window.Fire = new Vue(); // event
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -28,6 +88,25 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
+Vue.component(
+  'passport-clients',
+  require('./components/passport/Clients.vue').default
+);
+
+Vue.component(
+  'passport-authorized-clients',
+  require('./components/passport/AuthorizedClients.vue').default
+);
+
+Vue.component(
+  'passport-personal-access-tokens',
+  require('./components/passport/PersonalAccessTokens.vue').default
+);
+
+
+
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    router
 });
