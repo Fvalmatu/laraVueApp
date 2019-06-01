@@ -11,6 +11,14 @@ window.Vue = require('vue');
 import { Form, HasError, AlertError } from 'vform'; //se importa errores de vform
 import moment from 'moment'; //se importa moment para las fechas
 
+
+
+import Gate from "./Gate";
+Vue.prototype.$gate = new Gate(window.user);
+
+
+
+
 //se importa alertas
 import Swal from 'sweetalert2'
 window.Swal = Swal;
