@@ -19,5 +19,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
+Route::get('invoice', function () {
+    return view('invoice');
+});
+
+
 //Route::get('{path}', "HomeController@index")->where( 'path', '([A-z\d-\/_.]+)?' ); //esta linea da error
 Route::get('{path}', "HomeController@index")->where( 'path', '([A-z\/_.\d-]+)?' ); //esta si funciona
